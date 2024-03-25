@@ -1,0 +1,14 @@
+{
+  "name": "nodeweb",
+  "version": "1.0.0",
+  "description": "this is syafii's first attempt at making a web with node, hope it goes well",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Muhammad Abdullah Syafii",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.1"
+  }
+}

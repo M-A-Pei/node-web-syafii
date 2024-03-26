@@ -1,27 +1,34 @@
-const http = require("http");
+//buat jalanin nodemon:
+//powershell -ExecutionPolicy Bypass -File (nama lengkap file)
 
-http.
-    createServer((req, res)=>{
-        res.writeHead(200, {
-            'Content-Type': 'text/html'
-        });
+const express = require('express')
+const app = express()
+const port = 3000
+const os = require('os');
 
-        const url = req.url;
+app.set("view engine", "ejs")
 
-        switch(url){
-            case '/':
-                res.write("hey guys, this is a web server");
-                res.end();
-                break;
-            case '/about':
-                res.write("hey guys, this is the about page");
-                res.end();
-                break;
-        }
+const orang = [
+    {
+        nama: "syafii",
+        umur: 17
+    },
+    {
+        nama: "hamzah",
+        umur: 16
+    }
+]
 
-        console.log(url);
-        res.end();
-    }).
-    listen(3000, () => {
-        console.log("node is listening on port 3000...")
-    })
+app.get('/', function (req, res) {
+    res.render("index", {nama: os.userInfo().username})
+})
+app.get('/about', function (req, res) {
+    res.render("about")
+})
+app.get('/contact', function (req, res) {
+    res.render("contact", {orang})
+})
+
+app.listen(port, ()=>{
+    console.log(`listening on port ${port}...`);
+})

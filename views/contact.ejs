@@ -1,13 +1,26 @@
-<%- include("layouts/header.ejs") %>
-    <h1 style="color: darkgoldenrod; text-align: center;">This is the contacts page</h1>
-<%- include("layouts/nav.ejs") %>
+<h1 class="display-2">This is the contacts page</h1>
 
-    <ul>
-        <% orang.forEach(e => { %>
-            <li>
-                <b><%= e.nama %></b>
-                <small><%= e.umur %> tahun</small>
-            </li>
+<table class="table">
+    <thead style="text-align: center;">
+      <tr>
+        <th scope="col">no</th>
+        <th scope="col">name</th>
+        <th scope="col">age</th>
+        <th scope="col">action</th>
+      </tr>
+    </thead>
+    <tbody style="text-align: center;">
+        <% orang.forEach((e, i) => { %>
+            <tr>
+                <th scope="row"><%= i+1 %></th>
+                <td><%= e.nama %></td>
+                <td><%= e.umur %></td>
+                <td>
+                    <button class="btn btn-danger">delete</button>
+                    <button class="btn btn-warning">update</button>
+                    <button class="btn btn-success">info</button>
+                </td>
+            </tr>
         <% }) %>
-    </ul>
-<%- include("layouts/footer.ejs") %>
+    </tbody>
+</table>

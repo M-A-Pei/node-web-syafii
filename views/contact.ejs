@@ -1,26 +1,57 @@
-<h1 class="display-2">This is the contacts page</h1>
+<h1 class="display-2 mt-3 mb-3">This is the contacts page <i class="bi bi-book-half"></i></h1>
 
-<table class="table">
-    <thead style="text-align: center;">
-      <tr>
-        <th scope="col">no</th>
-        <th scope="col">name</th>
-        <th scope="col">age</th>
-        <th scope="col">action</th>
-      </tr>
-    </thead>
-    <tbody style="text-align: center;">
-        <% orang.forEach((e, i) => { %>
-            <tr>
-                <th scope="row"><%= i+1 %></th>
-                <td><%= e.nama %></td>
-                <td><%= e.umur %></td>
-                <td>
-                    <button class="btn btn-danger">delete</button>
-                    <button class="btn btn-warning">update</button>
-                    <button class="btn btn-success">info</button>
-                </td>
-            </tr>
-        <% }) %>
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead style="text-align: center;">
+              <tr>
+                <th scope="col">no</th>
+                <th scope="col">name</th>
+                <th scope="col">age</th>
+                <th scope="col">email</th>
+                <th scope="col">action</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: center;">
+                <% orang.forEach((e, i) => { %>
+                    <tr>
+                        <th scope="row"><%= i+1 %></th>
+                        <td><%= e.nama %></td>
+                        <td><%= e.umur %></td>
+                        <td><%= e.email %></td>
+                        <td>
+                            <a class="btn btn-danger">delete <i class="bi bi-file-earmark-x-fill"></i></a>
+                            <a class="btn btn-warning">update <i class="bi bi-eraser-fill"></i></a>
+                            <a href="/contact/<%= e.nama %>" class="btn btn-success">info <i class="bi bi-person-circle"></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <h4 class="display-5">make new data: <i class="bi bi-calendar4-range"></i></h4>
+        <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">name</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">age</label>
+                <input type="number" class="form-control" id="exampleInputPassword1" placeholder="your age">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">email</label>
+                <input type="email" class="form-control" id="exampleInputPassword1" placeholder="Your email">
+              </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">No Hp</label>
+              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="your phone number">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+          </form>
+    </div>
+</div>

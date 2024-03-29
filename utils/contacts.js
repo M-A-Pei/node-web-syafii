@@ -30,6 +30,12 @@ const tampilList = () =>{
     return file;
 }
 
+const findFile = (nama) => {
+    let file = JSON.parse(fs.readFileSync("./data/contacts.json", "utf-8"));
+    let found = file.find((data) => data.nama === nama)
+    return found
+}
+
 const deleteList = (nama) =>{
     let file = JSON.parse(fs.readFileSync("./contacts.json", "utf-8"));
     file.forEach((element, i) => {
@@ -42,4 +48,4 @@ const deleteList = (nama) =>{
 }
 
 
-module.exports = {simpanContact, tampilList, deleteList};
+module.exports = {simpanContact, tampilList, deleteList, findFile};

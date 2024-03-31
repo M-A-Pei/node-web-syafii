@@ -1,5 +1,6 @@
 const fs = require("fs");
 const validator = require('validator');
+const notifier = require('node-notifier');
 
 if(!fs.existsSync("./data")){
     fs.mkdirSync("./data");
@@ -13,16 +14,36 @@ const simpanContact = (data) => {
     let file = JSON.parse(fs.readFileSync("./data/contacts.json", "utf-8"));
     let duplikat = file.find((contacts)=>{return contacts.email === data.email});
 
-    if(!validator.isEmail(data.email)){console.log(error(`ini bukan email`)); rl.close(); return false}
+    if(!validator.isEmail(data.email)){
+        notifier.notify({
+            title: 'this is not an email',
+            message: 'next time, enter in a real one',
+            sound: true,
+            wait: true
+          })
+        return false
+    }
 
     if(duplikat) {
-        console.log(error(`email sudah ada`));
+        notifier.notify({
+            title: 'this email is already used',
+            message: 'next time, use your own email',
+            sound: true,
+            wait: true
+          })
         return false;
     }
 
+
     file.push(data);
+    notifier.notify({
+        title: 'success',
+        message: 'your data was successfully inserted!',
+        sound: true,
+        wait: true
+      })
     fs.writeFileSync("./data/contacts.json", JSON.stringify(file));
-    console.log(success(`terimakasih untuk informasi mu \n`));
+    return true;
 }
 
 const tampilList = () =>{

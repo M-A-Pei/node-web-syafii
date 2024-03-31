@@ -8,7 +8,6 @@
                 <th scope="col">no</th>
                 <th scope="col">name</th>
                 <th scope="col">age</th>
-                <th scope="col">email</th>
                 <th scope="col">action</th>
               </tr>
             </thead>
@@ -18,7 +17,6 @@
                         <th scope="row"><%= i+1 %></th>
                         <td><%= e.nama %></td>
                         <td><%= e.umur %></td>
-                        <td><%= e.email %></td>
                         <td>
                             <a class="btn btn-danger">delete <i class="bi bi-file-earmark-x-fill"></i></a>
                             <a class="btn btn-warning">update <i class="bi bi-eraser-fill"></i></a>
@@ -37,7 +35,7 @@
         <form method="post" action="">
             <div class="form-group">
               <label for="exampleInputEmail1">name</label>
-              <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+              <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="Enter name">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">age</label>
@@ -51,6 +49,14 @@
               <label for="exampleInputPassword1">No Hp</label>
               <input type="text" name="no" class="form-control" id="exampleInputPassword1" placeholder="your phone number">
             </div>
+
+            <div class="input-group mt-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">describe yourself</span>
+              </div>
+              <textarea class="form-control" name="desc"></textarea>
+            </div>
+
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
           </form>
     </div>

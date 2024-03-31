@@ -11,12 +11,11 @@ const port = 3000
 
 app.set("view engine", "ejs")
 app.use(expressEjsLayouts)
+app.use(express.urlencoded({ extended: true }))
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/font')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
-
-const orang = contact.tampilList();
 
 app.get('/', (req, res) => {
     res.render("index", {nama: os.userInfo().username, layout:"layouts/main"})
@@ -26,17 +25,19 @@ app.get('/about', (req, res) => {
 })
 
 app.get('/contact', (req, res) => {
+    const orang = contact.tampilList();
     res.render("contact", {orang, layout:"layouts/main"})
 })
 
 app.get('/contact/:nama', (req, res) => {
-    const contact = contact.findFile(req.params.nama);
-    console.log(contact);
-    res.render("detail", {layout:"layouts/main", contact})
+    const x = contact.findFile(req.params.nama);
+    res.render("detail", {layout:"layouts/main", x})
 })
 
 app.post('/contact', (req, res) => {
-   console.log(req.body); //ini buat bikin data baru, blm selesai
+   let z = contact.simpanContact(req.body);
+   const orang = contact.tampilList();
+   res.render("contact", {orang, layout:"layouts/main"})
 })
 
 app.listen(port, ()=>{

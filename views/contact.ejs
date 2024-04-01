@@ -1,6 +1,6 @@
 <h1 class="display-2 mt-3 mb-3">This is the contacts page <i class="bi bi-book-half"></i></h1>
 
-<div class="row">
+<div class="row mb-5">
     <div class="col-12">
         <table class="table">
             <thead style="text-align: center;">
@@ -12,15 +12,24 @@
               </tr>
             </thead>
             <tbody style="text-align: center;">
+                <% if (orang.length == 0) { %>
+                    <tr>
+                      <td colspan="4">
+                        <div class="alert alert-danger" role="alert">
+                          no contacts yet, go ahead and make some!
+                        </div>
+                      </th>
+                    </tr>
+                <% } %>
                 <% orang.forEach((e, i) => { %>
                     <tr>
                         <th scope="row"><%= i+1 %></th>
                         <td><%= e.nama %></td>
                         <td><%= e.umur %></td>
                         <td>
-                            <a class="btn btn-danger">delete <i class="bi bi-file-earmark-x-fill"></i></a>
+                            <a href="/contact/delete/<%= e.email %>" class="btn btn-danger">delete <i class="bi bi-file-earmark-x-fill"></i></a>
                             <a class="btn btn-warning">update <i class="bi bi-eraser-fill"></i></a>
-                            <a href="/contact/<%= e.nama %>" class="btn btn-success">info <i class="bi bi-person-circle"></i></a>
+                            <a href="/contact/<%= e.email %>" class="btn btn-success">info <i class="bi bi-person-circle"></i></a>
                         </td>
                     </tr>
                 <% }) %>
@@ -60,4 +69,19 @@
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
           </form>
     </div>
-</div>
+
+    <div class="col-6">
+    <% if (typeof error != "undefined") { %>
+      <% if (error.length == 0) { %>
+        <div class="alert alert-success" role="alert">
+          data inserted succesfully
+        </div>
+      <% }else{%>
+        <% error.forEach(e => { %>
+          <div class="alert alert-danger" role="alert">
+            <%= e.msg %>
+          </div>
+        <% }) %>
+        <%} %>
+    <% } %>
+    </div>

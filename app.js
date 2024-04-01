@@ -2,10 +2,12 @@
 //powershell -ExecutionPolicy Bypass -File (nama lengkap file)
 
 const express = require('express')
+const {body, check, validationResult} = require('express-validator')
 const os = require('os')
 const path = require('path')
 const contact = require('./utils/contacts')
 const expressEjsLayouts = require('express-ejs-layouts')
+const { error } = require('console')
 const app = express()
 const port = 3000
 
@@ -29,31 +31,41 @@ app.get('/contact', (req, res) => {
     res.render("contact", {orang, layout:"layouts/main"})
 })
 
-app.get('/contact/:nama', (req, res) => {
-    const x = contact.findFile(req.params.nama);
+app.get('/contact/delete/:email', (req, res) => {
+    contact.deleteList(req.params.email);
+    const orang = contact.tampilList();
+    res.render("contact", {orang, layout:"layouts/main"})
+})
+
+app.get('/contact/:email', (req, res) => {
+    const x = contact.findFile(req.params.email);
     res.render("detail", {layout:"layouts/main", x})
 })
 
-app.post('/contact', (req, res) => {
-   let z = contact.simpanContact(req.body);
-   const orang = contact.tampilList();
-   res.render("contact", {orang, layout:"layouts/main"})
+app.post('/contact', 
+    body('email', "this isnt an email!").isEmail(),
+    body('no', "this isnt an indonesian number!").isMobilePhone('id-ID'),
+    body('umur', "your age cant be a negative!").isNumeric({no_symbols: true}),
+    body('email').custom((v) => {
+        if(contact.duplikat(v)){
+            throw new Error ("email ini sudah ada!");
+        }
+        return true;
+    }),
+    (req, res) => {
+    let error = validationResult(req);
+    if(!error.isEmpty()){
+        const orang = contact.tampilList();
+        res.render("contact", {orang, error: error.array(), layout:"layouts/main"})
+    }else{
+        contact.simpanContact(req.body);
+        const orang = contact.tampilList();
+        res.render("contact", {orang, error: error.array(), layout:"layouts/main"})
+    }
+
 })
 
 app.listen(port, ()=>{
     console.log(`listening on port ${port}...`);
 })
-
-
-//ReferenceError: Cannot access 'contact' before initialization
-// at C:\syafii\node-web-syafii\app.js:33:21
-// at Layer.handle [as handle_request] (C:\syafii\node-web-syafii\node_modules\express\lib\router\layer.js:95:5)
-// at next (C:\syafii\node-web-syafii\node_modules\express\lib\router\route.js:149:13)
-// at Route.dispatch (C:\syafii\node-web-syafii\node_modules\express\lib\router\route.js:119:3)
-// at Layer.handle [as handle_request] (C:\syafii\node-web-syafii\node_modules\express\lib\router\layer.js:95:5)
-// at C:\syafii\node-web-syafii\node_modules\express\lib\router\index.js:284:15
-// at param (C:\syafii\node-web-syafii\node_modules\express\lib\router\index.js:365:14)
-// at param (C:\syafii\node-web-syafii\node_modules\express\lib\router\index.js:376:14)
-// at Function.process_params (C:\syafii\node-web-syafii\node_modules\express\lib\router\index.js:421:3)
-// at next (C:\syafii\node-web-syafii\node_modules\express\lib\router\index.js:280:10)
 
